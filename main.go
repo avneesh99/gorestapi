@@ -26,8 +26,8 @@ type Author struct {
 func main() {
 	// Init Router
 	r := mux.NewRouter()
-	config, _ := gomiddleware.GetConfigFromDashboard("http://54.173.124.88:8080")
-	kafkaWriter := gomiddleware.GetKafkaWriter("54.173.124.88:9092", "akto.api.logs", 100, 1*time.Second)
+	config, _ := gomiddleware.GetConfigFromDashboard("http://172.31.91.87:8080")
+	kafkaWriter := gomiddleware.GetKafkaWriter("172.31.91.87:9092", "akto.api.logs", 100, 1*time.Second)
 	r.Use(gomiddleware.Middleware(kafkaWriter, config, 1111))
 
 	books = append(books, Book{ID: "1", Isbn: "3223", Title: "Book 1", Author: &Author{
