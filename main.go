@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/akto-api-security/gomiddleware"
@@ -26,8 +28,10 @@ type Author struct {
 func main() {
 	// Init Router
 	r := mux.NewRouter()
-	config, _ := gomiddleware.GetConfigFromDashboard("http://172.31.91.87:8080")
-	kafkaWriter := gomiddleware.GetKafkaWriter("172.31.91.87:9092", "akto.api.logs", 100, 1*time.Second)
+	url := os.Getenv("AKTO_CONNECT_IP")
+	fmt.Println("URL: " + url + ":8080")
+	config, _ := gomiddleware.GetConfigFromDashboard(url + ":8080")
+	kafkaWriter := gomiddleware.GetKafkaWriter(url+":9092", "akto.api.logs", 100, 1*time.Second)
 	r.Use(gomiddleware.Middleware(kafkaWriter, config, 1111))
 
 	books = append(books, Book{ID: "1", Isbn: "3223", Title: "Book 1", Author: &Author{
@@ -41,6 +45,7 @@ func main() {
 	r.HandleFunc("/api/books/{id}", getBooks).Methods("GET")
 	r.HandleFunc("/api/cars", getBooks).Methods("GET")
 	r.HandleFunc("/api/auth/signin", signIn).Methods("GET")
+	r.HandleFunc("/api/latest/meta-data/local-ipv4", asdf).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":8000", r))
 }
@@ -62,4 +67,8 @@ func signIn(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(201)
 	json.NewEncoder(w).Encode("wefwe")
+}
+
+func asdf(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("127.0.0.1"))
 }
