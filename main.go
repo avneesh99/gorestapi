@@ -28,11 +28,14 @@ type Author struct {
 func main() {
 	// Init Router
 	r := mux.NewRouter()
-	url := os.Getenv("AKTO_CONNECT_IP")
-	fmt.Println("URL: " + url + ":8080")
-	config, _ := gomiddleware.GetConfigFromDashboard(url + ":8080")
-	kafkaWriter := gomiddleware.GetKafkaWriter(url+":9092", "akto.api.logs", 100, 1*time.Second)
-	r.Use(gomiddleware.Middleware(kafkaWriter, config, 1111))
+	kafka_url := os.Getenv("AKTO_CONNECT_IP") + ":9092"
+	dashboard_url := "http://" + os.Getenv("AKTO_DASHBOARD_IP") + ":8080"
+	fmt.Println(kafka_url)
+	fmt.Println(dashboard_url)
+	config, _ := gomiddleware.GetConfigFromDashboard(dashboard_url)
+	fmt.Println(config.BlackList)
+	kafkaWriter := gomiddleware.GetKafkaWriter(kafka_url, "akto.api.logs", 100, 1*time.Second)
+	r.Use(gomiddleware.Middleware(kafkaWriter, config, 1000000))
 
 	books = append(books, Book{ID: "1", Isbn: "3223", Title: "Book 1", Author: &Author{
 		Firstname: "Avneesh", Lastname: "Hota"}})
@@ -43,7 +46,7 @@ func main() {
 	r.HandleFunc("/api/books", getBooks).Methods("GET")
 	r.HandleFunc("/api/books", getBooks).Methods("POST")
 	r.HandleFunc("/api/books/{id}", getBooks).Methods("GET")
-	r.HandleFunc("/api/cars", getBooks).Methods("GET")
+	r.HandleFunc("/api/cars", getBooks).Methods("POST")
 	r.HandleFunc("/api/auth/signin", signIn).Methods("GET")
 	r.HandleFunc("/api/latest/meta-data/local-ipv4", asdf).Methods("GET")
 
