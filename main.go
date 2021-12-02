@@ -47,6 +47,10 @@ func main() {
 	r.HandleFunc("/api/books", getBooks).Methods("POST")
 	r.HandleFunc("/api/books/{id}", getBooks).Methods("GET")
 	r.HandleFunc("/api/cars", getBooks).Methods("POST")
+	r.HandleFunc("/api/toys", getBooks).Methods("POST")
+	r.HandleFunc("/api/games", getBooks).Methods("POST")
+	r.HandleFunc("/api/football", getBooks).Methods("POST")
+	r.HandleFunc("/api/cricket", getBooks).Methods("POST")
 	r.HandleFunc("/api/auth/signin", signIn).Methods("GET")
 	r.HandleFunc("/api/latest/meta-data/local-ipv4", asdf).Methods("GET")
 
