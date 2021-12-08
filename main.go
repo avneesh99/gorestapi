@@ -65,7 +65,7 @@ func getBooks(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(201)
-	json.NewEncoder(w).Encode(books)
+	json.NewEncoder(w).Encode(books[0])
 }
 
 func signIn(w http.ResponseWriter, r *http.Request) {
