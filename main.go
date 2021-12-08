@@ -29,13 +29,13 @@ func main() {
 	// Init Router
 	r := mux.NewRouter()
 	kafka_url := os.Getenv("AKTO_CONNECT_IP") + ":9092"
-	dashboard_url := "http://" + os.Getenv("AKTO_DASHBOARD_IP") + ":8080"
 	fmt.Println(kafka_url)
-	fmt.Println(dashboard_url)
-	config, _ := gomiddleware.GetConfigFromDashboard(dashboard_url)
-	fmt.Println(config.BlackList)
+	// dashboard_url := "http://" + os.Getenv("AKTO_DASHBOARD_IP") + ":8080"
+	// fmt.Println(dashboard_url)
+	// config, _ := gomiddleware.GetConfigFromDashboard(dashboard_url)
+	// fmt.Println(config.BlackList)
 	kafkaWriter := gomiddleware.GetKafkaWriter(kafka_url, "akto.api.logs", 100, 1*time.Second)
-	r.Use(gomiddleware.Middleware(kafkaWriter, config, 1000000))
+	r.Use(gomiddleware.Middleware(kafkaWriter, 1000000))
 
 	books = append(books, Book{ID: "1", Isbn: "3223", Title: "Book 1", Author: &Author{
 		Firstname: "Avneesh", Lastname: "Hota"}})
