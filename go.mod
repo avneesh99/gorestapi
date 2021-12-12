@@ -4,12 +4,11 @@ go 1.17
 
 replace github.com/akto-api-security/gomiddleware => ../gomiddleware
 
-require (
-	github.com/akto-api-security/gomiddleware v0.0.0-00010101000000-000000000000
-	github.com/gorilla/mux v1.8.0
-)
+// github.com/akto-api-security/gomiddleware v0.0.0-00010101000000-000000000000
+require github.com/gorilla/mux v1.8.0
 
 require (
+	github.com/akto-api-security/gomiddleware v0.0.0-00010101000000-000000000000 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/go-cmp v0.5.6 // indirect

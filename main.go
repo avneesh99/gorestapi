@@ -14,10 +14,11 @@ import (
 
 // book struct (Model)
 type Book struct {
-	ID     string  `json:"id"`
-	Isbn   string  `json:"isbn"`
-	Title  string  `json:"title"`
-	Author *Author `json:"author"`
+	ID        string  `json:"id"`
+	Isbn      string  `json:"isbn"`
+	Title     string  `json:"title"`
+	Author    *Author `json:"author"`
+	Timestamp int64   `json:"timestamp"`
 }
 
 type Author struct {
@@ -36,11 +37,11 @@ func main() {
 	// fmt.Println(config.BlackList)
 	kafkaWriter := gomiddleware.GetKafkaWriter(kafka_url, "akto.api.logs", 100, 1*time.Second)
 	r.Use(gomiddleware.Middleware(kafkaWriter, 1000000))
-
+	now := time.Now()
 	books = append(books, Book{ID: "1", Isbn: "3223", Title: "Book 1", Author: &Author{
-		Firstname: "Avneesh", Lastname: "Hota"}})
+		Firstname: "Avneesh", Lastname: "Hota"}, Timestamp: now.Unix()})
 	books = append(books, Book{ID: "2", Isbn: "2323", Title: "Book 2", Author: &Author{
-		Firstname: "Ankush", Lastname: "Jain"}})
+		Firstname: "Ankush", Lastname: "Jain"}, Timestamp: now.Unix()})
 
 	// Route endpoints
 	r.HandleFunc("/api/books", getBooks).Methods("GET")
