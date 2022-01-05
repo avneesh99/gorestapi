@@ -35,7 +35,7 @@ func main() {
 	// fmt.Println(dashboard_url)
 	// config, _ := gomiddleware.GetConfigFromDashboard(dashboard_url)
 	// fmt.Println(config.BlackList)
-	kafkaWriter := gomiddleware.GetKafkaWriter(kafka_url, "akto.api.logs", 100, 1*time.Second)
+	kafkaWriter := gomiddleware.GetKafkaWriter(kafka_url, "akto.api.logs", 100, 10*time.Second)
 	r.Use(gomiddleware.Middleware(kafkaWriter, 1000000))
 	now := time.Now()
 	books = append(books, Book{ID: "1", Isbn: "3223", Title: "Book 1", Author: &Author{
