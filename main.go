@@ -62,11 +62,29 @@ func main() {
 var books []Book
 
 func getBooks(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
+	var param1 = r.URL.Query().Get("p")
+	var param2 = r.URL.Query().Get("q")
 
-	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(201)
-	json.NewEncoder(w).Encode(books[0])
+	if param1 == "2" {
+		w.Header().Set("Content-Type", "text/plain")
+	} else if param1 == "3" {
+	} else {
+		fmt.Println(param1)
+		w.Header().Set("Content-Type", "application/json")
+		// json.NewEncoder(w).Encode(books[0])
+	}
+
+	if param2 == "1" {
+		json.NewEncoder(w).Encode(books[0])
+	} else if param2 == "2" {
+		w.Write([]byte(param2))
+	} else {
+
+	}
+
+	// r.ParseForm()
+
 }
 
 func signIn(w http.ResponseWriter, r *http.Request) {
