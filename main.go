@@ -69,6 +69,17 @@ func getBooks(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("(((((((((((((((((((((((")
 	fmt.Println(string(j))
 	fmt.Println("(((((((((((((((((((((((")
+
+	ip := r.RemoteAddr
+	xff := r.Header["x-forwarded-for"]
+	if len(xff) != 0 {
+		ip = xff[0]
+	}
+
+	fmt.Println("********************************")
+	fmt.Println(ip)
+	fmt.Println("********************************")
+
 	r.ParseForm()
 	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(201)
