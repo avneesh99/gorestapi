@@ -62,8 +62,14 @@ func main() {
 var books []Book
 
 func getBooks(w http.ResponseWriter, r *http.Request) {
+	j, err := json.Marshal(r.Header)
+	if err != nil {
+		return
+	}
+	fmt.Println("(((((((((((((((((((((((")
+	fmt.Println(string(j))
+	fmt.Println("(((((((((((((((((((((((")
 	r.ParseForm()
-
 	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(201)
 	json.NewEncoder(w).Encode(books[0])
