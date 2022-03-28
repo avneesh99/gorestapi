@@ -21,6 +21,24 @@ type Book struct {
 	Timestamp int64   `json:"timestamp"`
 }
 
+type Car struct {
+	ID     string `json:"id"`
+	Number string `json:"number"`
+	Model  string `json:"model"`
+}
+
+type Toy struct {
+	ID     string `json:"id"`
+	Number string `json:"number"`
+	Model  string `json:"model"`
+	Wheels string `json:"wheels"`
+}
+
+type Football struct {
+	ID  string         `json:"id"`
+	Map map[int]string `json:"map"`
+}
+
 type Author struct {
 	Firstname string `json:"firstname"`
 	Lastname  string `json:"lastname"`
@@ -43,14 +61,29 @@ func main() {
 	books = append(books, Book{ID: "2", Isbn: "2323", Title: "Book 2", Author: &Author{
 		Firstname: "Ankush", Lastname: "Jain"}, Timestamp: now.Unix()})
 
+	cars = append(cars, Car{ID: "1", Number: "2323", Model: "Car 1"})
+	cars = append(cars, Car{ID: "2", Number: "23423", Model: "Car 2"})
+	cars = append(cars, Car{ID: "3", Number: "9203", Model: "Car 3"})
+
+	toys = append(toys, Toy{ID: "1", Number: "2323", Model: "Toy 1", Wheels: "32"})
+	toys = append(toys, Toy{ID: "2", Number: "1131", Model: "Toy 2", Wheels: "32"})
+	toys = append(toys, Toy{ID: "3", Number: "8888", Model: "Toy 3", Wheels: "32"})
+	toys = append(toys, Toy{ID: "4", Number: "2312", Model: "Toy 4", Wheels: "32"})
+
+	c := map[int]string{}
+	c[1] = "Ankush"
+	c[2] = "Avneesh"
+	c[3] = "Ankita"
+	footballs = append(footballs, Football{ID: "4", Map: c})
+
 	// Route endpoints
 	r.HandleFunc("/api/books", getBooks).Methods("GET")
 	r.HandleFunc("/api/books", getBooks).Methods("POST")
 	r.HandleFunc("/api/books/{id}", getBooks).Methods("GET")
-	r.HandleFunc("/api/cars", getBooks).Methods("POST")
-	r.HandleFunc("/api/toys", getBooks).Methods("POST")
+	r.HandleFunc("/api/cars", getCars).Methods("POST")
+	r.HandleFunc("/api/toys", getToys).Methods("POST")
 	r.HandleFunc("/api/games", getBooks).Methods("POST")
-	r.HandleFunc("/api/football", getBooks).Methods("POST")
+	r.HandleFunc("/api/football", getFootball).Methods("POST")
 	r.HandleFunc("/api/cricket", getBooks).Methods("POST")
 	r.HandleFunc("/api/auth/signin", signIn).Methods("GET")
 	r.HandleFunc("/api/latest/meta-data/local-ipv4", asdf).Methods("GET")
@@ -60,6 +93,9 @@ func main() {
 
 // init books var as slice Book struct
 var books []Book
+var cars []Car
+var toys []Toy
+var footballs []Football
 
 func getBooks(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
@@ -67,6 +103,30 @@ func getBooks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(201)
 	json.NewEncoder(w).Encode(books[0])
+}
+
+func getCars(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
+	w.WriteHeader(201)
+	json.NewEncoder(w).Encode(cars)
+}
+
+func getToys(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
+	w.WriteHeader(201)
+	json.NewEncoder(w).Encode(toys[0])
+}
+
+func getFootball(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
+	w.WriteHeader(201)
+	json.NewEncoder(w).Encode(footballs[0])
 }
 
 func signIn(w http.ResponseWriter, r *http.Request) {
