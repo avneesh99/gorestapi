@@ -67,6 +67,10 @@ type Something struct {
 	Hockey     Hockey     `json:"hockey"`
 }
 
+type Tesla struct {
+	Elon Anything `json:"elon"`
+}
+
 type Anything struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
@@ -127,6 +131,7 @@ func main() {
 		Basketball: Basketball{ID: "1", Name: "nameeee"},
 		Hockey:     Hockey{A: "1", B: "2", C: "23"},
 	})
+	tesla = append(tesla, Tesla{Elon: Anything{ID: "4", Name: "2312", A: "Toy 4", B: "32", C: "we"}})
 
 	c := map[int]string{}
 	c[1] = "Ankush"
@@ -149,6 +154,8 @@ func main() {
 	r.HandleFunc("/api/auth/signin", signIn).Methods("GET")
 	r.HandleFunc("/api/latest/meta-data/local-ipv4", asdf).Methods("GET")
 	r.HandleFunc("/api/something/{id}", getNothing).Methods("GET")
+	r.HandleFunc("/api/ankush/pepsi/{id}", getPepsi).Methods("GET")
+	r.HandleFunc("/api/ankush/coke/{id}", getCoke).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":8000", r))
 
@@ -160,6 +167,7 @@ var cars []Car
 var toys []Toy
 var anything []Anything
 var something []Something
+var tesla []Tesla
 var footballs []Football
 var counter = 0
 
@@ -176,11 +184,22 @@ func getNothing(w http.ResponseWriter, r *http.Request) {
 	counter++
 	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(201)
-	if counter%2 == 0 {
-		json.NewEncoder(w).Encode(anything[0])
-	} else {
-		json.NewEncoder(w).Encode(something[0])
-	}
+	json.NewEncoder(w).Encode(tesla[0])
+}
+
+func getPepsi(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
+	w.WriteHeader(201)
+	json.NewEncoder(w).Encode(anything[0])
+}
+
+func getCoke(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	counter++
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
+	w.WriteHeader(201)
+	json.NewEncoder(w).Encode(something[0])
 }
 
 func getCarsId(w http.ResponseWriter, r *http.Request) {
