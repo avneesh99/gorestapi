@@ -54,6 +54,38 @@ type Football struct {
 	Map map[int]string `json:"map"`
 }
 
+type Cricket struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+	A    string `json:"a"`
+	B    string `json:"b"`
+	C    string `json:"c"`
+}
+
+type Something struct {
+	Basketball Basketball `json:"basketball"`
+	Hockey     Hockey     `json:"hockey"`
+}
+
+type Anything struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+	A    string `json:"a"`
+	B    string `json:"b"`
+	C    string `json:"c"`
+}
+
+type Basketball struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+type Hockey struct {
+	A string `json:"a"`
+	B string `json:"b"`
+	C string `json:"c"`
+}
+
 type Author struct {
 	Firstname string `json:"firstname"`
 	Lastname  string `json:"lastname"`
@@ -90,6 +122,12 @@ func main() {
 	toys = append(toys, Toy{ID: "3", Number: "8888", Model: "Toy 3", Wheels: "32"})
 	toys = append(toys, Toy{ID: "4", Number: "2312", Model: "Toy 4", Wheels: "32"})
 
+	anything = append(anything, Anything{ID: "4", Name: "2312", A: "Toy 4", B: "32", C: "we"})
+	something = append(something, Something{
+		Basketball: Basketball{ID: "1", Name: "nameeee"},
+		Hockey:     Hockey{A: "1", B: "2", C: "23"},
+	})
+
 	c := map[int]string{}
 	c[1] = "Ankush"
 	c[2] = "Avneesh"
@@ -110,6 +148,7 @@ func main() {
 	r.HandleFunc("/api/cricket", getBooks).Methods("POST")
 	r.HandleFunc("/api/auth/signin", signIn).Methods("GET")
 	r.HandleFunc("/api/latest/meta-data/local-ipv4", asdf).Methods("GET")
+	r.HandleFunc("/api/something/{id}", getNothing).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":8000", r))
 
@@ -119,6 +158,8 @@ func main() {
 var books []Book
 var cars []Car
 var toys []Toy
+var anything []Anything
+var something []Something
 var footballs []Football
 var counter = 0
 
@@ -128,6 +169,18 @@ func getBooks1(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(201)
 	json.NewEncoder(w).Encode(cars[0])
+}
+
+func getNothing(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	counter++
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
+	w.WriteHeader(201)
+	if counter%2 == 0 {
+		json.NewEncoder(w).Encode(anything[0])
+	} else {
+		json.NewEncoder(w).Encode(something[0])
+	}
 }
 
 func getCarsId(w http.ResponseWriter, r *http.Request) {
