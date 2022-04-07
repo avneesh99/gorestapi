@@ -26,6 +26,15 @@ type Car struct {
 	ID     string            `json:"id"`
 	Number string            `json:"number"`
 	Model  string            `json:"model"`
+	A      string            `json:"a"`
+	B      string            `json:"b"`
+	C      string            `json:"c"`
+	D      string            `json:"d"`
+	E      string            `json:"e"`
+	F      string            `json:"f"`
+	G      string            `json:"g"`
+	H      string            `json:"h"`
+	I      string            `json:"i"`
 	X      string            `json:"x"`
 	Y      string            `json:"y"`
 	Z      string            `json:"z"`
@@ -67,9 +76,14 @@ func main() {
 	books = append(books, Book{ID: "2", Isbn: "2323", Title: "Book 2", Author: &Author{
 		Firstname: "Ankush", Lastname: "Jain"}, Timestamp: now.Unix()})
 
-	cars = append(cars, Car{ID: "1", Number: "2323", Model: "Car 1", X: "1", Y: "2", Z: "3"})
-	cars = append(cars, Car{ID: "2", Number: "23423", Model: "Car 2", X: "1", Y: "2", Z: "3"})
-	cars = append(cars, Car{ID: "3", Number: "9203", Model: "Car 3", X: "1", Y: "2", Z: "3"})
+	cars = append(cars, Car{ID: "1", Number: "2323", Model: "Car 1",
+		A: "1", B: "1", C: "1", D: "1", E: "1", F: "1", G: "1", H: "1", I: "1", X: "1", Y: "2", Z: "3"})
+
+	cars = append(cars, Car{ID: "2", Number: "23423", Model: "Car 2",
+		A: "1", B: "1", C: "1", D: "1", E: "1", F: "1", G: "1", H: "1", I: "1", X: "1", Y: "2", Z: "3"})
+
+	cars = append(cars, Car{ID: "3", Number: "9203", Model: "Car 3",
+		A: "1", B: "1", C: "1", D: "1", E: "1", F: "1", G: "1", H: "1", I: "1", X: "1", Y: "2", Z: "3"})
 
 	toys = append(toys, Toy{ID: "1", Number: "2323", Model: "Toy 1", Wheels: "32"})
 	toys = append(toys, Toy{ID: "2", Number: "1131", Model: "Toy 2", Wheels: "32"})
