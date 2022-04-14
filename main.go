@@ -93,6 +93,9 @@ type Hockey struct {
 type Author struct {
 	Firstname string `json:"firstname"`
 	Lastname  string `json:"lastname"`
+	Email     string `json: "email"`
+	Phone     string `json: "phone"`
+	CC        string `json: "cc"`
 }
 
 func main() {
@@ -108,9 +111,9 @@ func main() {
 	r.Use(gomiddleware.Middleware(kafkaWriter, 1000000))
 	now := time.Now()
 	books = append(books, Book{ID: "1", Isbn: "3223", Title: "Book 1", Author: &Author{
-		Firstname: "Avneesh", Lastname: "Hota"}, Timestamp: now.Unix()})
+		Firstname: "Avneesh", Lastname: "Hota", Email: "avneesh@akto.io", Phone: "+917021916328", CC: "378282246310005"}, Timestamp: now.Unix()})
 	books = append(books, Book{ID: "2", Isbn: "2323", Title: "Book 2", Author: &Author{
-		Firstname: "Ankush", Lastname: "Jain"}, Timestamp: now.Unix()})
+		Firstname: "Ankush", Lastname: "Jain", Email: "avneesh@akto.io", Phone: "+917021916328", CC: "378282246310005"}, Timestamp: now.Unix()})
 
 	cars = append(cars, Car{ID: "1", Number: "2323", Model: "Car 1",
 		A: "1", B: "1", C: "1", D: "1", E: "1", F: "1", G: "1", H: "1", I: "1", X: "1", Y: "2", Z: "3"})
