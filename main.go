@@ -159,6 +159,7 @@ func main() {
 	r.HandleFunc("/api/something/{id}", getNothing).Methods("GET")
 	r.HandleFunc("/api/ankush/pepsi/{id}", getPepsi).Methods("GET")
 	r.HandleFunc("/api/ankush/coke/{id}", getCoke).Methods("GET")
+	r.HandleFunc("/api/bus/{id}", getBus).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":8000", r))
 
@@ -261,6 +262,22 @@ func getFootball(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(201)
 	json.NewEncoder(w).Encode(footballs[0])
+}
+
+func getBus(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	fmt.Println(r.URL)
+
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
+	w.WriteHeader(201)
+	c := map[string]string{}
+	c["path"] = r.URL.String()
+	c["username"] = "Avneesh"
+	c["character"] = "STUDDDD"
+	c["age"] = "10"
+	c["car"] = "Mercedes"
+	json.NewEncoder(w).Encode(c)
+
 }
 
 func signIn(w http.ResponseWriter, r *http.Request) {
