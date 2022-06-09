@@ -102,6 +102,18 @@ type Author struct {
 	CC        string `json: "cc"`
 }
 
+type SubTypes struct {
+	CC1  string `json:"cc1"`
+	CC2  string `json:"cc2"`
+	CC3  string `json:"cc3"`
+	CC4  int64  `json:"cc4"`
+	IP1  string `json:"ip1"`
+	IP2  string `json:"ip2"`
+	Mob1 string `json:"mob1"`
+	Mob2 string `json:"mob2"`
+	Jwt  string `json:"jwt"`
+}
+
 func main() {
 	// Init Router
 	r := mux.NewRouter()
@@ -146,6 +158,13 @@ func main() {
 	c[3] = "Ankita"
 	footballs = append(footballs, Football{ID: "4", Map: c})
 
+	subTypes = SubTypes{
+		CC1: "378282246310005", CC2: "5267   318 1879 75 4 49", CC3: "4111-1111-1111-1111",
+		CC4: 378282246310005, IP1: "172.8.9.28", IP2: "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+		Mob1: "+91996716796", Mob2: "+1 650 253 00 00",
+		Jwt: "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBa3RvIiwic3ViIjoicmVmcmVzaFRva2VuIiwic2lnbmVkVXAiOiJ0cnVlIiwidXNlcm5hbWUiOiJhbmtpdGFAZ21haWwuY29tIiwiaWF0IjoxNjM0OTcxMTMxLCJleHAiOjE2MzUwNTc1MzF9.Ph4Jv-fdggwvnbdVViD9BWUReYL0dVfVGuMRz4d2oZNnYzWV0JCmjpB68p6k0yyPPua_yagIWVZf_oYH9PUgS7EuaPYR-Vg6uxKR1HuXRA6wb8Xf4RPoFjJYkhWoYmv38V9Cz2My9U85wgGHGZXEufu8ubrFmIfOP6-A39M4meNGw48f5oOz8V337SX45uPc6jE0EfmM4l9EbqFFCF0lRXbMMzn-ijsyXxLkI5npWnqtW3PAHC2Rs3FV40tkRqHYF-WM6SzyHLBh6bVeyeOsFRBoEjv-zFh8yrYnT6OvCa6jII2A6uj4MQ2k11-5bDBhfVPVc4hEQz37H_DWwtf23g",
+	}
+
 	// Route endpoints
 	r.HandleFunc("/api/books", getBooks).Methods("GET")
 	r.HandleFunc("/api/books", getBooks).Methods("POST")
@@ -164,6 +183,7 @@ func main() {
 	r.HandleFunc("/api/ankush/pepsi/{id}", getPepsi).Methods("GET")
 	r.HandleFunc("/api/ankush/coke/{id}", getCoke).Methods("GET")
 	r.HandleFunc("/api/bus/{id}", getBus).Methods("GET")
+	r.HandleFunc("/api/sub_types", getSubTypes).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":8000", r))
 
@@ -178,6 +198,7 @@ var something []Something
 var tesla []Tesla
 var footballs []Football
 var counter = 0
+var subTypes SubTypes
 
 func getBooks1(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
@@ -185,6 +206,14 @@ func getBooks1(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.WriteHeader(201)
 	json.NewEncoder(w).Encode(cars[0])
+}
+
+func getSubTypes(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
+	w.WriteHeader(201)
+	json.NewEncoder(w).Encode(subTypes)
 }
 
 func getNothing(w http.ResponseWriter, r *http.Request) {
